@@ -1,7 +1,5 @@
-this is a remake of ranfx+ and it’s fully ffmpeg
-{choose:random dialogue|meow|:3|12 16|bfhgdshjfdfabiuhsdafbuafsd|idk}
-{set:c|}{set:e|something went wrong}
-{set:fx|{choose:{set:e|Green Lowers}
+this is a remake of ranfx+ and it’s fully ffmpeg{if:{tagownerid}|=|958167624133521488|then:|else:{newline}**the person who created this tag is not the person who made the code ({mention:958167624133521488}/mr.media2k).**}
+{choose:random dialogue|meow|:3|12 16|bfhgdshjfdfabiuhsdafbuafsd|idk}{set:c|}{set:e|something went wrong}{set:fx|{choose:{set:e|Green Lowers}
 -vf movie=$(magick hald:6 -color-matrix '0 0 1 0 1 0 1 0 0' -modulate 100,100,53 ./Green_Lowers.ppm; echo ./Green_Lowers.ppm),"[in]haldclut",format=yuv420p -af "rubberband=phase=7950000/4.83:pitch=2^(-12/12):detector=2.14748e+09/56:transients=crisp:pitchq=consistency" -c:v libx264 -c:a pcm_s16le|{set:e|ZooPals Effect V3}
 -vf movie=$(magick hald:6 -modulate 100,100,%[fx:164/1.8-100] Custom.ppm; echo Custom.ppm),"[in]haldclut",format=yuv444p,scale=$h:$h,"geq='if(lte(hypot(X-W*0.5,Y-H*0.5),min(W,H)*0.5),p(W*0.5+(X-W*0.5)*max(1-(1)*(1-pow(hypot(X-W*0.5,Y-H*0.5)/(min(W,H)*0.5),1)),0),
 H*0.5+(Y-H*0.5)*max(1-(1)*(1-pow(hypot(X-W*0.5,Y-H*0.5)/(min(W,H)*0.5),1)),0)),p(X,Y))'",scale=$w:$h,setsar=1:1,format=yuv420p,scroll=0:0:0.5,frei0r=mirr0r:-0.5 -af "rubberband=phase=7950000/4.83:pitch=2^(-11/12):detector=2.14748e+09/56:transients=crisp:pitchq=consistency" -c:v libx264 -c:a pcm_s16le|{set:e|G-Major 97}
@@ -131,8 +129,7 @@ wine cmd &//dev/null && wine ./autotune.exe -q -b 256 -w 1024 -N -v 10 mod$i.wav
 ffmpeg -i a$i.mp4 -i aud$i.wav -af highpass=200,bass=g=-10,alimiter=limit=.2:latency=1 -map 0:v -map 1:a -c:v ffv1 -c:a pcm_s16le|{set:e|Freshing Equalizer}
 -vf "movie=$(magick hald:6 -define modulate:colorspace=hsl -modulate %[fx:0*100+100],%[fx:0*100+100],%[fx:0.5*200+100] hsv.ppm; echo hsv.ppm),[in]haldclut",negate -af rubberband=phase=7950000/4.83:pitch='2^(-4/12)':detector=2.14748e+09/56:transients=crisp:pitchq=consistency,alimiter=1:latency=1 -c:v libx264 -c:a flac|{set:e|1000 Flutes}
 -stream_loop -1 -i "htps://cdn.discordapp.com/attachments/1513368653137973329/1515216498677776454/snip.f56e6a1e.mp3" -vf rotate=-15.7*PI/180*t/$d,format=yuv444p,scale=$h:$h,"geq='p(W*0.5+(hypot(X-W*0.5,Y-H*0.5)+1e-6)*cos((atan2(Y-H*0.5,X-W*0.5))+((-100)/180*PI)*(if(lt(hypot(X-W*0.5,Y-H*0.5)+1e-6,min(W,H)*0.5),1-(hypot(X-W*0.5,Y-H*0.5)+1e-6)/(min(W,H)*0.5),0)^2)),H*0.5+(hypot(X-W*0.5,Y-H*0.5)+1e-6)*sin((atan2(Y-H*0.5,X-W*0.5))+((-100)/180*PI)*(if(lt(hypot(X-W*0.5,Y-H*0.5)+1e-6,min(W,H)*0.5),1-(hypot(X-W*0.5,Y-H*0.5)+1e-6)/(min(W,H)*0.5),0)^2)))'",scale=$w:$h,setsar=1:1,format=yuv420p -map 0:v -map 1:a -shortest
-}}
-{set:fx|{replace:hyyps|https|{get:fx}}}
+}}{set:fx|{replace:hyyps|https|{get:fx}}}
 {sh:
 load {iv}
 sr=$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of default=nokey=1:noprint_wrappers=1 $FILE_1)
@@ -142,3 +139,4 @@ w=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=
 h=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=nw=1:nk=1 $FILE_1)
 fc=$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of default=nokey=1:noprint_wrappers=1 $FILE_1)
 ffmpeg -i $FILE_1 -f mp4 {get:fx} ./output/$(basename $FILE_1)}
+you got **{get:e}!**
