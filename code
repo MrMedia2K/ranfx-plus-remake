@@ -368,7 +368,7 @@ ffmpeg -i a$i.mp4 -i out$i.wav -vf "movie=$(magick hald:6 -define modulate:color
 -vf movie=$(magick hald:6 -modulate 100,100,%[fx:0.5*200+100] cm3.ppm; echo cm3.ppm),"[in]haldclut",hflip,negate -filter_complex "[0]rubberband=formant=712921634/635.8:pitch=2^(-4.5/12):pitchq=speed:transients=crisp:window=short:channels=together[a1];[0]rubberband=formant=712921634/635.8:pitch=2^(-10.5/12):pitchq=speed:transients=crisp:window=short:channels=together[a2];[a1][a2]amix=2:normalize=0[a]" -map 0:v -map "[a]" -c:v ffv1 -c:a pcm_s16le|{set:e|G-Major 7103}
 -vf movie=$(magick hald:6 -colorspace lab -channel r -negate il.ppm; echo ./il.ppm),"[in]haldclut","huesaturation=0:0:strength=100[b];movie=$(magick hald:6 -colorspace srgb -modulate 100,100,%[fx:0.905*135+78] hue.ppm; echo hue.ppm)[h];[b][h]haldclut",format=yuv444p,scale=$h:$h,"geq='p((W*0.5)+(X-W*0.5)/(lte((hypot(X-W*0.5,Y-H*0.5)),(min(W,H)*0.5))*(1+(0.25)*2*atan(atan(atan(1-(hypot(X-W*0.5,Y-H*0.5))/(min(W,H)*0.5))^2)))+gt((hypot(X-W*0.5,Y-H*0.5)),(min(W,H)*0.5))*1),(H*0.5)+(Y-H*0.5)/(lte((hypot(X-W*0.5,Y-H*0.5)),(min(W,H)*0.5))*(1+(0.25)*2*atan(atan(atan(1-(hypot(X-W*0.5,Y-H*0.5))/(min(W,H)*0.5))^2)))+gt((hypot(X-W*0.5,Y-H*0.5)),(min(W,H)*0.5))*1))'",scale=$w:$h,setsar=1:1,format=yuv420p -filter_complex "[0:a]rubberband=pitch=2^(-10/12):window=standard:transients=crisp:detector=2.14748e+09/4.9:pitchq=consistency:channels=together[a1];[0:a]rubberband=pitch=2^(9/12):window=standard:transients=crisp:detector=2.14748e+09/4.9:pitchq=consistency:channels=together[a2];[0:a]rubberband=pitch=2^(14/12):window=standard:transients=crisp:detector=2.14748e+09/4.9:pitchq=consistency:channels=together[a3];[a1][a2][a3]amix=3,volume=3[outa]" -map 0:v -map "[outa]" -c:v libx264 -c:a pcm_s16le -pix_fmt yuv420p
 }}}{set:fx|{replace:hyyps|https|{replace:htps|https|{get:fx}}}}
-you got **{get:e}!**{if:{len:{get:c}}|=|0|then:|else: suggested or code by **{get:c}**}
+{if:{get:e}|=|something went wrong|then:something went wrong. apparent code: `{get:fx}`|esle:you got **{get:e}!**{if:{len:{get:c}}|=|0|then:|else: suggested or code by **{get:c}**}
 {iferror:{sh:
 load {iv}
 sr=$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of default=nokey=1:noprint_wrappers=1 $FILE_1)
@@ -387,4 +387,4 @@ get 0 duration d
 get 0 framecount fc
 {eval:{get:fx}}
 convert 0 video/mp4
-render 0}}
+render 0}}}
